@@ -401,10 +401,22 @@ function WoopWidget() {
   );
 }
 
+function CodeDescription() {
+    return (
+        <div className="fixed right-7 top-7">
+            <div className="flex flex-row gap-2">
+                <p className="text-sm text-[#9E9E9E]">Built with React</p>
+                <p className="text-sm font-semibold text-[#575757]">Still in development</p>
+            </div>
+        </div>
+    )
+}
+
 export default function WoopPage() {
   return (
     <div className="flex h-screen flex-col items-center mt-24 gap-4 w-full max-w-lg mx-auto">
       <WoopWidget />
+      <CodeDescription />
     </div>
   );
 }
