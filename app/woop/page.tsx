@@ -14,7 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 /* 
 
@@ -25,10 +27,49 @@ The main tabs component, Receive, Invest, NFTs
 function TabsComponent() {
   return (
     <Tabs defaultValue="receive" className="w-full">
-      <TabsList className="w-full">
-        <TabsTrigger value="receive">Receive</TabsTrigger>
-        <TabsTrigger value="invest">Invest</TabsTrigger>
-        <TabsTrigger value="NFTs">NFTs</TabsTrigger>
+      <TabsList className="w-full flex gap-2 bg-white mb-4 py-6">
+        <TabsTrigger
+          value="receive"
+          className="
+            cursor-pointer 
+            py-5
+            text-[1rem]
+            bg-[#f7f7f7]
+            text-[#9E9E9E]
+            hover:bg-gray-200 
+            data-[state=active]:bg-[#CEE4FF] 
+            data-[state=active]:text-[#0E76FD]"
+        >
+          Receive
+        </TabsTrigger>
+        <TabsTrigger
+          value="invest"
+          className="
+            cursor-pointer 
+            py-5
+            text-[1rem]
+            bg-[#f7f7f7]
+            text-[#9E9E9E]
+            hover:bg-gray-200 
+            data-[state=active]:bg-[#CEE4FF] 
+            data-[state=active]:text-[#0E76FD]"
+        >
+          Invest
+        </TabsTrigger>
+        <TabsTrigger
+          value="NFTs"
+          className="
+            cursor-pointer 
+            py-5
+            text-[1rem]
+            bg-[#f7f7f7]
+            text-[#9E9E9E]
+            hover:bg-gray-200 
+            data-[state=active]:bg-[#CEE4FF] 
+            data-[state=active]:text-[#0E76FD]"
+        >
+          NFTs
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="receive">
         <ReceiveModule />
@@ -37,7 +78,7 @@ function TabsComponent() {
         <InvestModule />
       </TabsContent>
       <TabsContent value="NFTs">
-        <p>NFTs</p>
+        <NFTModule />
       </TabsContent>
     </Tabs>
   );
@@ -50,12 +91,16 @@ The select amount component at the top of the receive module
 */
 
 function SelectAmount() {
-    const [isUnique, setIsUnique] = useState(false);
+  const [isUnique, setIsUnique] = useState(false);
   return (
     <Card className="p-4">
       <div className="flex flex-col gap-4">
         <div className="flex flex-row gap-2">
-          <Input placeholder="Enter amount" disabled={isUnique} className="flex-2" />
+          <Input
+            placeholder="Enter amount"
+            disabled={isUnique}
+            className="flex-2"
+          />
           <Select>
             <SelectTrigger className="w-full mt-0 flex-1">
               <SelectValue placeholder="Select a currency" />
@@ -90,10 +135,10 @@ interface DropdownProps {
 
 function Dropdown({ label, options, subtext, placeholder }: DropdownProps) {
   return (
-    <div>
-      <p>{label}</p>
+    <div className="flex flex-col gap-2">
+      <p className="text-[1rem] text-[#9E9E9E]">{label}</p>
       <Select>
-        <SelectTrigger className="w-full mt-0">
+        <SelectTrigger className="w-full mt-0 min-h-12 text-[#9E9E9E]">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
@@ -111,6 +156,32 @@ function Dropdown({ label, options, subtext, placeholder }: DropdownProps) {
 
 /* 
 
+Button component for various places
+
+*/
+
+interface WoopButtonProps {
+  label: string;
+  flex?: boolean;
+  secondary?: boolean;
+}
+
+function WoopButton({ label, flex, secondary }: WoopButtonProps) {
+  return (
+    <Button
+      className={`${flex ? "flex-1" : "w-full"} ${
+        secondary
+          ? "bg-white text-[#0E76FD] border-1 border-[#0E76FD] hover:bg-[#1164D0] hover:text-white"
+          : "bg-[#0E76FD] text-white hover:bg-[#1164D0]"
+      } py-6 cursor-pointer text-[1rem]`}
+    >
+      {label}
+    </Button>
+  );
+}
+
+/* 
+
 Component for Woop message
 
 */
@@ -122,10 +193,49 @@ interface TransactionMessageProps {
 
 function TransactionMessage({ label, placeholder }: TransactionMessageProps) {
   return (
-    <div>
-      <p>{label}</p>
-      <Input placeholder={placeholder} />
+    <div className="flex flex-col gap-2 text-[#9E9E9E]">
+      <p className="text-[1rem] text-[#9E9E9E]">{label}</p>
+      <Input placeholder={placeholder} className="min-h-12 text-[#9E9E9E]" />
     </div>
+  );
+}
+
+/* 
+
+DeFi Card component
+
+*/
+
+function DeFiCard() {
+  return (
+    <Card className="p-4 bg-[#f7f7f7]">
+      <div className="flex flex-row justify-between items-end">
+        <h3 className="text-[#8e8e8e] text-2xl font-bold">USDC / USDT Pool</h3>
+        <Badge className="text-sm text-[#9e9e9e] rounded-full">1-4% APY</Badge>
+      </div>
+      <div className="flex flex-col gap-0">
+        <p className="text-sm text-[#9e9e9e]">
+          Platform: <span className="font-bold">Curve Finance</span>
+        </p>
+        <p className="text-sm text-[#9e9e9e]">
+          Network: <span className="font-bold">Ethereum</span>
+        </p>
+        <p className="text-sm text-[#9e9e9e]">
+          Assets invested:{" "}
+          <span className="font-bold">108 USDC / 108 USDT</span>
+        </p>
+        <p className="text-sm text-[#9e9e9e]">
+          Rewards available to claim: <span className="font-bold">$66.34</span>
+        </p>
+        <p className="text-sm text-[#9e9e9e]">
+          Total amount gained: <span className="font-bold">$768.98</span>
+        </p>
+      </div>
+      <div className="flex flex-row gap-2">
+        <WoopButton label="Manage" flex />
+        <WoopButton label="Claim rewards" flex secondary />
+      </div>
+    </Card>
   );
 }
 
@@ -140,9 +250,35 @@ function ReceiveModule() {
     <div className="flex flex-col gap-6">
       <SelectAmount />
       <Tabs defaultValue="wallet" className="w-full">
-        <TabsList className="w-full">
-          <TabsTrigger value="wallet">Crypto Wallet</TabsTrigger>
-          <TabsTrigger value="bank">Bank Account</TabsTrigger>
+        <TabsList className="w-full flex gap-2 bg-white mb-4 py-6">
+          <TabsTrigger
+            value="wallet"
+            className="
+            cursor-pointer 
+            py-5
+            text-[1rem]
+            bg-[#f7f7f7]
+            text-[#9E9E9E]
+            hover:bg-gray-200 
+            data-[state=active]:bg-[#CEE4FF] 
+            data-[state=active]:text-[#0E76FD]"
+          >
+            Crypto Wallet
+          </TabsTrigger>
+          <TabsTrigger
+            value="bank"
+            className="
+            cursor-pointer 
+            py-5
+            text-[1rem]
+            bg-[#f7f7f7]
+            text-[#9E9E9E]
+            hover:bg-gray-200 
+            data-[state=active]:bg-[#CEE4FF] 
+            data-[state=active]:text-[#0E76FD]"
+          >
+            Bank Account
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="wallet">
           <Dropdown
@@ -165,6 +301,7 @@ function ReceiveModule() {
         </TabsContent>
       </Tabs>
       <TransactionMessage label="Message" placeholder="Pizza yesterday" />
+      <WoopButton label="Continue" />
     </div>
   );
 }
@@ -177,12 +314,30 @@ The invest module in its entirety
 
 function InvestModule() {
   return (
-    <div>
-      <p>
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-[#0E76FD]">
         Invest your funds across different DeFi protocols depending on your
         preferences. For examples, Ethereum staking or stablecoin yield
         generation.
       </p>
+      <WoopButton label="New investment" />
+      <div className="flex flex-col gap-2">
+        <p className="text-[#0E76FD] font-bold">Current investment worth</p>
+        <h2 className="text-[#0E76FD] text-5xl font-bold">$3,123.47</h2>
+        <div>
+          <p className="text-sm text-[#9e9e9e]">
+            Invested across three networks
+          </p>
+          <p className="text-sm text-[#9e9e9e]">
+            Total amount gained: <span className="font-bold">$768.98</span>
+          </p>
+          <p className="text-sm text-[#9e9e9e]">
+            Rewards available to be claimed:{" "}
+            <span className="font-bold">$66.34</span>
+          </p>
+        </div>
+      </div>
+      <DeFiCard />
     </div>
   );
 }
@@ -193,7 +348,33 @@ The NFT module in its entirety
 
 */
 
-function NFTModule() {}
+function NFTModule() {
+  return (
+    <div>
+      <p className="text-[#0E76FD] font-bold">Bored Ape Yacht Club</p>
+      <Image
+        src="/bored-ape.png"
+        alt="Bored Ape NFT"
+        width={600}
+        height={600}
+        className="rounded-t-lg w-full"
+      />
+      <Card className="p-4 bg-[#f7f7f7]">
+        <div className="flex flex-col gap-0">
+          <h3 className="text-[#8e8e8e] text-2xl font-bold">#8782</h3>
+          <p className="text-sm text-[#9e9e9e]">
+            Floor price:<span className="font-bold">12.99 ETH </span>
+            <span className="text-xs">($24,531.79) </span>
+          </p>
+          <p className="text-sm text-[#9e9e9e]">
+            Platform: <span className="font-bold">OpenSea</span>
+          </p>
+        </div>
+      </Card>
+      <WoopButton label="Buy" />
+    </div>
+  );
+}
 
 /* 
 
@@ -211,9 +392,9 @@ function WoopWidget() {
           width={180}
           height={38}
           priority
-          className="h-8"
+          className="h-8 w-auto"
         />
-        <X className="h-6 w-6" />
+        <X className="h-6 w-6 text-[#9E9E9E]" />
       </div>
       <TabsComponent />
     </Card>
